@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Utility Tools</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+        }
+        .navbar {
+            background-color: #1E3A8A;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.5s ease; /* Transición suave */
+        }
+        .navbar img {
+            height: 50px;
+            transition: opacity 0.5s ease; /* Transición de opacidad */
+        }
+        .navbar:hover {
+            background-color: rgba(30, 58, 138, 0); /* Fondo transparente */
+        }
+        .navbar:hover img {
+            opacity: 1; /* Asegura que el logo sea completamente visible */
+        }
+        .navbar .left-content {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .left-content p {
+            color: white;
+            margin-left: 20px;
+            font-size: 18px;
+            opacity: 0; /* Ocultar el texto inicialmente */
+            transition: opacity 0.5s ease; /* Transición de opacidad para el texto */
+        }
+        .navbar:hover .left-content p {
+            opacity: 0; /* El texto desaparece al hacer hover */
+        }
+        .container {
+            display: flex;
+            justify-content: space-around; /* Distribuye los elementos en una sola fila */
+            flex-wrap: wrap; /* Asegura que se ajusten si no hay espacio horizontal */
+        }
+        .tool-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 5px; /* Reducción de margen entre los recuadros */
+            padding: 30px;
+            width: 340px; /* Ancho de los recuadros */
+            text-align: center;
+            transition: transform 0.3s; /* Efecto al pasar el ratón */
+        }
+        .tool-card:hover {
+            transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+        }
+        .tool-card h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .tool-card p {
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+        .tool-card a {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #1E3A8A;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .tool-card a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="left-content">
+            <img src="logo.png" alt="Logo">
+            <p>Life Utility Tools</p> <!-- Texto visible junto al logo -->
+        </div>
+    </div>
+
+    <h1>Life Utility Tools</h1>
+    <div class="container">
+        <div class="tool-card">
+            <h2>Template for stories</h2>
+            <p>Use this template for story-defect creation.</p>
+            <a href="formtemplate.html">Go to Template creator</a>
+        </div>
+        <div class="tool-card">
+            <h2>GUID's & member numbers</h2>
+            <p>Transform several GUIDs from member numbers and viceversa.</p>
+            <a href="guids.html">Go to GUIDs converter</a>
+        </div>
+        <div class="tool-card">
+            <h2>Coordination Calls</h2>
+            <p>Check Zoom room availability and set up calls.</p>
+            <a href="coordcalls.html">Go to Coordination Calls</a>
+        </div>
+    </div>
+</body>
+</html>

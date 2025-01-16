@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordination Calls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background-color: #1E3A8A;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.5s ease; /* Transición suave */
+        }
+        .navbar img {
+            height: 50px;
+            transition: opacity 0.5s ease; /* Transición de opacidad */
+        }
+        .navbar:hover {
+            background-color: rgba(30, 58, 138, 0); /* Fondo transparente */
+        }
+        .navbar:hover img {
+            opacity: 1; /* Asegura que el logo sea completamente visible */
+        }
+        .navbar .left-content {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .left-content p {
+            color: white;
+            margin-left: 20px;
+            font-size: 18px;
+            opacity: 1; /* Asegura que el texto sea visible inicialmente */
+            transition: opacity 0.5s ease; /* Transición de opacidad para el texto */
+        }
+        .navbar:hover .left-content p {
+            opacity: 0; /* El texto desaparece al hacer hover */
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .available {
+            color: green;
+        }
+        .not-available {
+            color: red;
+        }
+        button {
+            background-color: #1565C0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:disabled {
+            background-color: #b0bec5;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0d47a1;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="left-content">
+            <img src="logo.png" alt="Logo">
+            <p>Coordination Calls</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title">Coordination Calls Zoom Rooms Availability</div>
+        <table id="zoomRoomsTable">
+            <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Link</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>

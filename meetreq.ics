@@ -1,0 +1,39 @@
+function createMeetingRequest(room) {
+    const zoomLink = `${zoomBaseUrl}${room}`;
+    const subject = "Coordination Call";
+    const description = `INC:\nTitle:\nTeam:\nImpact:\nMember numbers affected:\nServices / applications affected:\n\nZoom Room: ${zoomLink}\n\nConference ID: [ID]\nPhone Numbers: [Numbers]`;
+
+    // Crear un archivo .ics para una reunión en formato iCalendar
+    const startDate = new Date();
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Duración de 1 hora
+
+    const icsContent = `
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Your Company//NONSGML v1.0//EN
+BEGIN:VEVENT
+UID:${Date.now()}@yourdomain.com
+DTSTAMP:${formatDate(startDate)}
+DTSTART:${formatDate(startDate)}
+DTEND:${formatDate(endDate)}
+SUMMARY:${subject}
+DESCRIPTION:${description}
+END:VEVENT
+END:VCALENDAR
+`;
+
+    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+
+    // Crear enlace de descarga
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'meeting-request.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function formatDate(date) {
+    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+}

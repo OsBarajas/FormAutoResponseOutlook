@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert GUIDs and Member Numbers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background-color: #1E3A8A;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.5s ease; /* Transición suave */
+        }
+        .navbar img {
+            height: 50px;
+            transition: opacity 0.5s ease; /* Transición de opacidad */
+        }
+        .navbar:hover {
+            background-color: rgba(30, 58, 138, 0); /* Fondo transparente */
+        }
+        .navbar:hover img {
+            opacity: 1; /* Asegura que el logo sea completamente visible */
+        }
+        .navbar .left-content {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .left-content p {
+            color: white;
+            margin-left: 20px;
+            font-size: 18px;
+            opacity: 1; /* Asegura que el texto sea visible inicialmente */
+            transition: opacity 0.5s ease; /* Transición de opacidad para el texto */
+        }
+        .navbar:hover .left-content p {
+            opacity: 0; /* El texto desaparece al hacer hover */
+        }
+
+        .file-input-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .file-input-label {
+            display: block;
+            width: 100%;
+            padding: 7px;
+            background-color: #1E3A8A;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 230px; /* Añade espacio entre los botones */
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function fetchUsaaNumbers() {
+            var idsInput = document.getElementById('guids').value;
+            fetch('/fetch_usaa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ids: idsInput})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result_usaa').innerText = data.join('\n');
+            });
+        }
+
+        function fetchGuids() {
+            var idsInput = document.getElementById('member_numbers').value;
+            fetch('/fetch_guid', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ids: idsInput})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result_guid').innerText = data.join('\n');
+            });
+        }
+
+        function uploadCSV(inputId, textareaId) {
+            var input = document.getElementById(inputId);
+            var textarea = document.getElementById(textareaId);
+            var reader = new FileReader();
+            reader.onload = function() {
+                textarea.value = reader.result;
+            };
+            reader.readAsText(input.files[0]);
+        }
+
+        function downloadCSV(textareaId, filename) {
+            var text = document.getElementById(textareaId).value;
+            var data = new Blob([text], { type: 'text/csv' });
+            var csvURL = window.URL.createObjectURL(data);
+            var tempLink = document.createElement('a');
+            tempLink.href = csvURL;
+            tempLink.setAttribute('download', filename);
+            tempLink.click();
+        }
+
+        function clearTextarea(textareaId) {
+            document.getElementById(textareaId).value = '';
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="left-content">
+            <img src="logo.png" alt="Logo">
+            <p>GUIDs converter</p>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <div style="width: 50%;">
+            <h1>Transform GUIDs to Member Numbers</h1>
+            <div class="file-input-container">
+                <label for="upload_guids" class="file-input-label">Upload CSV file</label>
+                <input type="file" id="upload_guids" class="file-input" accept=".csv" onchange="uploadCSV('upload_guids', 'guids')">
+            </div><br><br>
+            <textarea id="guids" placeholder="Enter the GUIDs separated by commas" rows="18" cols="50"></textarea><br><br>
+            <div class="button-container">
+                <button onclick="fetchUsaaNumbers()">Convert</button>
+                <button onclick="clearTextarea('guids')">Clean textbox</button>
+            </div><br><br>
+            <button onclick="downloadCSV('result_usaa', 'usaa_numbers.csv')">Download CSV</button><br><br>
+            <h2>Member Numbers:</h2>
+            <pre id="result_usaa"></pre>
+        </div>
+        <div style="width: 50%;">
+            <h1>Transform Member Numbers to GUIDs</h1>
+            <div class="file-input-container">
+                <label for="upload_member_numbers" class="file-input-label">Upload CSV file</label>
+                <input type="file" id="upload_member_numbers" class="file-input" accept=".csv" onchange="uploadCSV('upload_member_numbers', 'member_numbers')">
+            </div><br><br>
+            <textarea id="member_numbers" placeholder="Enter the Member Numbers separated by commas" rows="18" cols="50"></textarea><br><br>
+            <div class="button-container">
+                <button onclick="fetchGuids()">Convert</button>
+                <button onclick="clearTextarea('member_numbers')">Clean textbox</button>
+            </div><br><br>
+            <button onclick="downloadCSV('result_guid', 'guids.csv')">Download CSV</button><br><br>
+            <h2>GUIDs:</h2>
+            <pre id="result_guid"></pre>
+        </div>
+    </div>
+</body>
+</html>

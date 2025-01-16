@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defects | Spikes | Stories Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+
+        }
+
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            background-color: #1E3A8A;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-group button {
+            padding: 10px 20px;
+            background-color: #1E3A8A;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button-group button:hover {
+            background-color: #004a87;
+        }
+        .attached-files {
+            margin-top: 20px;
+        }
+        .steps-section {
+            margin-top: 30px;
+        }
+        .steps-section label {
+            margin-bottom: 10px;
+        }
+        .additional-info {
+            margin-top: 20px;
+        }
+        .file-input {
+            margin-top: 10px;
+        }
+        .file-list {
+            list-style-type: none;
+            margin-top: 10px;
+            padding-left: 0;
+        }
+        .file-list li {
+            background-color: #f4f4f4;
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        .location-image {
+            margin-top: 10px;
+            display: none;
+            width: 50%;
+        }
+        .steps-list,
+        .members-section,
+        .incidents-section {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .steps-list li,
+        .members-section li,
+        .incidents-section li {
+            margin-bottom: 10px;
+        }
+        .step-label,
+        .members-section,
+        .incidents-section {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+                .navbar {
+            background-color: #1E3A8A;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.5s ease; /* Transición suave */
+        }
+        .navbar img {
+            height: 50px;
+            transition: opacity 0.5s ease; /* Transición de opacidad */
+        }
+        .navbar:hover {
+            background-color: rgba(30, 58, 138, 0); /* Fondo transparente */
+        }
+        .navbar:hover img {
+            opacity: 1; /* Asegura que el logo sea completamente visible */
+        }
+        .navbar .left-content {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .left-content p {
+            color: white;
+            margin-left: 20px;
+            font-size: 18px;
+            opacity: 1; /* Asegura que el texto sea visible inicialmente */
+            transition: opacity 0.5s ease; /* Transición de opacidad para el texto */
+        }
+        .navbar:hover .left-content p {
+            opacity: 0; /* El texto desaparece al hacer hover */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="left-content">
+            <img src="logo.png" alt="Logo">
+            <p>Defects | Spikes | Stories</p>
+        </div>
+    </div>
+
+<div class="container">
+    <h2>Template for Story Creation</h2>
+
+    <div class="form-group">
+        <label for="incidentNumber">Incident Number:</label>
+        <input type="text" id="incidentNumber" placeholder="Incident Number">
+    </div>
+
+    <div class="form-group">
+        <label for="summary">Title (Summary):</label>
+        <input type="text" id="summary" placeholder="Summary">
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" rows="4" placeholder="Description"></textarea>
+    </div>
+
+        <div class="form-group">
+        <label for="location">ACC Image:</label>
+        <select id="location">
+            <option value="">Choose one option</option>
+            <option value="acc">Generic ACC</option>
+            <option value="life">Life</option>
+            <option value="health">Health</option>
+            <option value="annuity">Annuity</option>
+        </select>
+    </div>
+
+    <img id="locationImage" class="location-image" alt="Location Image" />
+
+    <div class="form-group">
+        <label for="impact">Impact:</label>
+        <textarea id="impact" rows="2" placeholder="Impact"></textarea>
+    </div>
+
+        <div class="form-group">
+        <label for="expectedResults">Expected results:</label>
+        <textarea id="expectedResults" rows="2" placeholder="Expected results"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="actualResults">Actual results:</label>
+        <textarea id="actualResults" rows="2" placeholder="Actual results"></textarea>
+    </div>
+
+        <div class="form-group">
+        <label for="workaround">Workaround:</label>
+        <textarea id="workaround" rows="2" placeholder="Workaround"></textarea>
+    </div>
+
+    <div class="form-group members-section">
+        <label>Members affected:</label>
+        <ul id="membersList" class="members-list"></ul>
+        <button id="addMemberButton">Add</button>
+        <button id="removeMemberButton">Remove</button>
+    </div>
+
+    <div class="form-group incidents-section">
+        <label>Incidents associated:</label>
+        <ul id="incidentsList" class="incidents-list"></ul>
+        <button id="addIncidentButton">Add</button>
+        <button id="removeIncidentButton">Remove</button>
+    </div>
+
+    <div class="form-group">
+        <label for="datetime">Datetime of the issue:</label>
+        <input type="text" id="datetime" placeholder="Select date">
+    </div>
+
+    <div class="form-group">
+        <label for="lob">LOB (Line of Business):</label>
+        <input type="text" id="lob" placeholder="Line of Business">
+    </div>
+
+    <div class="form-group">
+        <label for="channel">Channel:</label>
+        <textarea id="channel" rows="4" placeholder="Channel"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="state">State:</label>
+        <input type="text" id="state" placeholder="State">
+    </div>
+
+    <div class="form-group">
+        <label for="observations">Observations / Analysis:</label>
+        <textarea id="observations" rows="2" placeholder="Observations / Analysis"></textarea>
+    </div>
+
+
+    <div class="form-group">
+        <label for="priority">Priority:</label>
+        <select id="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="severity">Severity:</label>
+        <select id="severity">
+            <option value="minor">Minor</option>
+            <option value="major">Major</option>
+            <option value="critical">Critical</option>
+        </select>
+    </div>
+
+
+
+    <div class="steps-section">
+        <label>Steps to reproduce the issue:</label>
+        <ul id="stepsList" class="steps-list"></ul>
+        <button id="addStepButton">Add</button>
+        <button id="removeStepButton">Remove</button>
+    </div>
+
+    <div class="additional-info">
+        <label for="additionalNotes">Logs / evidence: </label>
+        <textarea id="additionalNotes" rows="4" placeholder="Kibana, Glassbox, Datadog, Grafana..."></textarea>
+    </div>
+
+    <div class="attached-files">
+        <label>Attached Files:</label>
+        <input type="file" id="fileInput" multiple class="file-input">
+        <ul id="fileList" class="file-list"></ul>
+    </div>
+
+
+    <div class="button-group">
+        <button id="createButton">Create</button>
+        <button id="cancelButton">Cancel</button>
+    </div>
+</div>
+
+<script>
+    // Initialize Flatpickr for calendar
+    flatpickr("#datetime", {
+        enableTime: false,
+        dateFormat: "m/d/Y",
+    });
+
+    // Show attached files list
+    document.getElementById("fileInput").addEventListener("change", function () {
+        const fileList = document.getElementById("fileList");
+        fileList.innerHTML = "";
+
+        for (let i = 0; i < this.files.length; i++) {
+            const li = document.createElement("li");
+            li.textContent = this.files[i].name;
+            fileList.appendChild(li);
+        }
+    });
+
+    // Show images from field "Location"
+    document.getElementById("location").addEventListener("change", function () {
+        const locationValue = this.value;
+        const locationImage = document.getElementById("locationImage");
+
+        if (locationValue === "acc") {
+            locationImage.src = "esign.png";
+            locationImage.style.display = "block";
+        } else if (locationValue === "life") {
+            locationImage.src = "life.png";
+            locationImage.style.display = "block";
+        } else if (locationValue === "health") {
+            locationImage.src = "health.png";
+            locationImage.style.display = "block";
+        } else if (locationValue === "annuity") {
+            locationImage.src = "annuity.png";
+            locationImage.style.display = "block";
+        } else {
+            locationImage.style.display = "none";
+        }
+    });
+
+    //  For field (Steps to reproduce the issue)
+    let stepCount = 0;
+    let memberCount = 0;
+
+    document.getElementById("addMemberButton").addEventListener("click", function () {
+        memberCount++;
+        const li = document.createElement("li");
+        li.innerHTML = `<span class="member-label">Member ${memberCount}:</span> <input type="text" placeholder="Member affected ${memberCount}" style="width: 70%;">`;
+        document.getElementById("membersList").appendChild(li);
+    });
+
+    document.getElementById("removeMemberButton").addEventListener("click", function () {
+        const membersList = document.getElementById("membersList");
+        if (membersList.children.length > 0) {
+            membersList.removeChild(membersList.lastChild);
+            memberCount--;
+        }
+    });
+
+    document.getElementById("addStepButton").addEventListener("click", function () {
+        stepCount++;
+        const li = document.createElement("li");
+        li.innerHTML = `<span class="step-label">Step ${stepCount}:</span> <input type="text" placeholder="Describe step ${stepCount}" style="width: 70%;">`;
+        document.getElementById("stepsList").appendChild(li);
+    });
+
+    document.getElementById("removeStepButton").addEventListener("click", function () {
+        const stepsList = document.getElementById("stepsList");
+        if (stepsList.children.length > 0) {
+            stepsList.removeChild(stepsList.lastChild);
+            stepCount--;
+        }
+    });
+
+        // Associated INCs (Incidents associated)
+    let incidentCount = 0;
+
+    document.getElementById("addIncidentButton").addEventListener("click", function () {
+        incidentCount++;
+        const li = document.createElement("li");
+        li.innerHTML = `<span class="incident-label">Incident ${incidentCount}:</span> <textarea rows="2" placeholder="Incident associated ${incidentCount}" style="width: 70%;"></textarea>`;
+        document.getElementById("incidentsList").appendChild(li);
+    });
+
+    document.getElementById("removeIncidentButton").addEventListener("click", function () {
+        const incidentsList = document.getElementById("incidentsList");
+        if (incidentsList.children.length > 0) {
+            incidentsList.removeChild(incidentsList.lastChild);
+            incidentCount--;
+        }
+    });
+
+// Creating  PDF
+document.getElementById("createButton").addEventListener("click", function () {
+    const incidentNumber = document.getElementById("incidentNumber").value;
+    const summary = document.getElementById("summary").value;
+    const datetime = document.getElementById("datetime").value;
+    const priority = document.getElementById("priority").value;
+    const severity = document.getElementById("severity").value;
+    const location = document.getElementById("location").value;
+    const description = document.getElementById("description").value;
+    const expectedResults = document.getElementById("expectedResults").value;
+    const actualResults = document.getElementById("actualResults").value;
+    const impact = document.getElementById("impact").value;
+    const workaround = document.getElementById("workaround").value;
+    const lob = document.getElementById("lob").value;
+    const channel = document.getElementById("channel").value;
+    const state = document.getElementById("state").value;
+    const observations = document.getElementById("observations").value;
+    const additionalNotes = document.getElementById("additionalNotes").value;
+
+    const membersAffectedValues = Array.from(document.querySelectorAll("#membersList li input")).map(input => input.value);
+    const incidentsAssociatedValues = Array.from(document.querySelectorAll("#incidentsList li textarea")).map(textarea => textarea.value);
+    const steps = Array.from(document.querySelectorAll("#stepsList li")).map(li => li.querySelector("input").value);
+    const files = Array.from(document.getElementById("fileList").children).map(li => li.textContent);
+
+    // Upload images from Location (Seal stamped on top right PDF and Outlook report)
+    const imageMap = {
+        acc: "image1.png",
+        life: "image1.png",
+        health: "image1.png",
+        annuity: "image1.png"
+    };
+
+    const selectedLocationImageUrl = imageMap[location];
+
+    if (confirm("Do you want to save this document as a PDF?")) {
+        const documentName = `${incidentNumber}_${summary.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '')}.pdf`;
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Draw dark line for container
+        doc.setFillColor(150, 150, 150);
+        doc.rect(12, 12, 90, 50, 'F');
+
+        // Main container for seal
+        doc.setFillColor(200, 200, 200);
+        doc.rect(10, 10, 90, 50, 'F');
+
+        let y = 40;
+        const lineHeight = 6;
+        const maxWidth = 190;
+        const pageHeight = doc.internal.pageSize.height;
+        const marginBottom = 20;
+
+        // Add "Location" image on top right
+        if (selectedLocationImageUrl) {
+            doc.addImage(selectedLocationImageUrl, 'JPEG', 150, 10, 50, 50); // Cambia la posición y dimensiones según sea necesario
+        }
+
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(12);
+
+        const addText = (text, x, y) => {
+            doc.text(text, x, y);
+        };
+
+        function addMultilineText(text, x, y, maxWidth) {
+            const lines = doc.splitTextToSize(text, maxWidth);
+            lines.forEach((line) => {
+                y = checkPageSpace(y, lineHeight);
+                doc.text(line, x, y);
+                y += lineHeight;
+            });
+            return y;
+        }
+
+        const checkPageSpace = (y, additionalSpace = 0) => {
+            if (y + additionalSpace > pageHeight - marginBottom) {
+                doc.addPage();
+                return 10;
+            }
+            return y;
+        };
+
+        // Titles in bold
+        const addBoldText = (text, x, y) => {
+            doc.setFont("Helvetica", "bold");
+            addText(text, x, y);
+            doc.setFont("Helvetica", "normal");
+        };
+
+        // Adding content
+        addBoldText("Incident Number:", 10, (y = 25));
+        addText(`${incidentNumber}`, 60, 25);
+        y += lineHeight;
+
+        addBoldText("Datetime:", 10, y);
+        addText(`${datetime}`, 60, y);
+        y += lineHeight;
+
+        addBoldText("Priority:", 10, y);
+        addText(`${priority}`, 60, y);
+        y += lineHeight;
+
+        addBoldText("Location:", 10, y);
+        addText(`${severity}`, 60, y);
+        y += lineHeight;
+
+        addBoldText("Severity:", 10, y);
+        addText(`${severity}`, 60, y);
+        y += lineHeight;
+
+        addBoldText("Title:", 10, (y = 75));
+        addText(`${summary}`, 60, 75);
+        y += lineHeight;
+
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        doc.setFont("Helvetica", "bold");
+        doc.text("Description:", 10, y);
+        doc.setFont("Helvetica", "normal");
+        y = addMultilineText(`${description}`, 10, y + lineHeight, 190);
+
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        doc.setFont("Helvetica", "bold");
+        doc.text("Impact:", 10, y);
+        doc.setFont("Helvetica", "normal");
+        y = addMultilineText(`${impact}`, 10, y + lineHeight, 190);
+
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        doc.setFont("Helvetica", "bold");
+        doc.text("Expected Results:", 10, y);
+        doc.setFont("Helvetica", "normal");
+        y = addMultilineText(`${expectedResults}`, 10, y + lineHeight, 190);
+
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        doc.setFont("Helvetica", "bold");
+        doc.text("Actual Results:", 10, y);
+        doc.setFont("Helvetica", "normal");
+        y = addMultilineText(`${actualResults}`, 10, y + lineHeight, 190);
+
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        doc.setFont("Helvetica", "bold");
+        doc.text("Workaround:", 10, y);
+        doc.setFont("Helvetica", "normal");
+        y = addMultilineText(`${workaround}`, 10, y + lineHeight, 190);
+
+        y += lineHeight;
+
+        // Section: Members Affected
+        if (membersAffectedValues.length > 0) {
+            y = checkPageSpace(y, lineHeight);
+            addBoldText("Members Affected:", 10, y);
+            y += lineHeight;
+            membersAffectedValues.forEach((value, index) => {
+                y = checkPageSpace(y, lineHeight);
+                y = addMultilineText(`${index + 1}. ${value}`, 10, y);
+            });
+        }
+
+        y += lineHeight;
+
+        // Section: Incidents Associated
+        if (incidentsAssociatedValues.length > 0) {
+            y = checkPageSpace(y, lineHeight);
+            addBoldText("Incidents Associated:", 10, y);
+            y += lineHeight;
+            incidentsAssociatedValues.forEach((value, index) => {
+                y = checkPageSpace(y, lineHeight);
+                y = addMultilineText(`${index + 1}. ${value}`, 10, y);
+            });
+        }
+
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        addBoldText("Line of Business (LOB):", 10, y);
+        addText(`${lob}`, 60, y);
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        addBoldText("Channel:", 10, y);
+        addText(`${channel}`, 60, y);
+        y += lineHeight;
+
+        y = checkPageSpace(y, lineHeight);
+        addBoldText("State:", 10, y);
+        addText(`${state}`, 60, y);
+        y += lineHeight;
+
+        y += lineHeight;
+
+        // Observations
+        y = checkPageSpace(y, lineHeight);
+        doc.setFont("Helvetica", "bold");
+        doc.text("Observations:", 10, y);
+        doc.setFont("Helvetica", "normal");
+        y = addMultilineText(`${observations}`, 10, y + lineHeight, 190);
+
+        y += lineHeight;
+
+        // Steps to Reproduce
+        if (steps.length > 0) {
+            y = checkPageSpace(y, lineHeight);
+            addBoldText(`Steps to Reproduce:`, 10, y);
+            y += lineHeight;
+            steps.forEach((step, index) => {
+                y = checkPageSpace(y, lineHeight);
+                y = addMultilineText(`${index + 1}. ${step}`, 10, y);
+            });
+        }
+
+        y += lineHeight;
+
+        // Add images to the report
+        const images = Array.from(document.querySelectorAll(".file-input")[0].files);
+        if (images.length > 0) {
+            y = checkPageSpace(y, lineHeight);
+            addBoldText("Images:", 10, y);
+            y += lineHeight;
+
+            // Promises for assuring image loading
+            const imagePromises = images.map(imageFile => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        resolve(event.target.result);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(imageFile);
+                });
+            });
+
+            // Image promises
+            Promise.all(imagePromises).then(imageDataUrls => {
+                imageDataUrls.forEach((dataUrl, index) => {
+                    // Añadir las imágenes a la página
+                    if (y + 45 > pageHeight - marginBottom) { // Chequear si se necesita nueva página
+                        doc.addPage();
+                        y = 10; // Reiniciar la posición Y en la nueva página
+                    }
+                    doc.addImage(dataUrl, 'JPEG', 10, y, 90, 70); // Ajustar dimensiones si es necesario
+                    y += 80; // Ajustar la posición Y según el tamaño de la imagen
+                });
+
+                // Finalizar el documento y descargar
+                doc.save(documentName);
+            }).catch(error => {
+                console.error("Error loading images: ", error);
+                alert("Error loading images. Please try again.");
+            });
+        } else {
+            // Si no hay imágenes, finalizar el documento y descargar
+            doc.save(documentName);
+        }
+    }
+});
+
+function createEmail() {
+    // Obtener los valores de los campos del formulario
+    const incidentNumber = document.getElementById("incidentNumber").value;
+    const summary = document.getElementById("summary").value;
+    const description = document.getElementById("description").value;
+    const location = document.getElementById("location").value;
+    const impact = document.getElementById("impact").value;
+    const expectedResults = document.getElementById("expectedResults").value;
+    const actualResults = document.getElementById("actualResults").value;
+    const workaround = document.getElementById("workaround").value;
+    const datetime = document.getElementById("datetime").value;
+    const lob = document.getElementById("lob").value;
+    const channel = document.getElementById("channel").value;
+    const state = document.getElementById("state").value;
+    const observations = document.getElementById("observations").value;
+    const priority = document.getElementById("priority").value;
+    const severity = document.getElementById("severity").value;
+
+    // Get members effected
+    const membersList = Array.from(document.querySelectorAll("#membersList li input")).map(input => input.value).filter(Boolean).join(", ") || "None";
+
+    // Get INC associated
+    const incidentsList = Array.from(document.querySelectorAll("#incidentsList li textarea")).map(textarea => textarea.value).filter(Boolean).join("; ") || "None";
+
+    // Steps to reproduce
+    const steps = Array.from(document.querySelectorAll("#stepsList li")).map(li => li.querySelector("input").value).filter(Boolean);
+
+    // Files attached
+    const files = Array.from(document.getElementById("fileList").children).map(li => li.textContent).join(", ");
+
+    // Email body (text plain) here needs to be in format
+    let emailBody = `Defect Creation / ToDo: \n\n` +
+                    `INCIDENT NUMBER: ${incidentNumber}\n` +
+                    `DATE / ISSUE: ${datetime}\n` +
+                    `PRIORITY: ${priority}\n` +
+                    `LOCATION: ${location}\n` +
+                    `SEVERITY: ${severity}\n` +
+                    `TITLE: ${summary}\n` +
+                    `DESCRIPTION: ${description}\n` +
+                    `IMPACT: ${impact}\n` +
+                    `EXPECTED RESULTS: ${expectedResults}\n` +
+                    `ACTUAL RESULTS: ${actualResults}\n` +
+                    `WORK AROUND: ${workaround}\n` +
+                    `MEMBERS AFFECTED: ${membersList}\n` +
+                    `INCIDENTS ASSOCIATED: ${incidentsList}\n` +
+                    `CHANNEL: ${channel}\n` +
+                    `STATE: ${state}\n` +
+                    `LINE OF BUSINESS (LOB): ${lob}\n` +
+                    `STEPS TO REPRODUCE THE ISSUE: ${steps.join(', ')}\n` +
+                    `LOGS / EVIDENCE: ${observations}\n` +
+                    `FILES ATTACHED: ${files}`;
+
+    // Subject
+    const subject = encodeURIComponent(`Incident Report - ${incidentNumber} - ${summary}`);
+    const body = encodeURIComponent(emailBody);
+
+    // Mailto link
+    const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+
+    // Popping message for user THIS CAN BE REMOVED AFTER MAIL REFORMAT
+     alert("Please manually attach the PDF to the email in Outlook. To do this:\n1. Go to the 'Insert' tab.\n2. Click on 'Object'.\n3. Select the PDF file and click 'OK'.");
+
+    // Opens new email (Outlook)
+    window.location.href = mailtoLink;
+
+}
+
+// Link to the event listener for Create button 
+document.getElementById("createButton").addEventListener("click", createEmail);
+document.getElementById("cancelButton").addEventListener("click", createEmail);
+
+
+
+</script>
+
+</body>
+</html>
