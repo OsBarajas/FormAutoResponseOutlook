@@ -30,16 +30,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function createMeetingRequest(roomName, roomUrl, conferenceId, phoneNumbers) {
     const subject = "Coordination Call";
-    const description = `
-                             Coordination Call
+    const htmlDescription = `
+<html>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <h1 style="text-align: center; color: #000;">Coordination Call</h1>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+      <thead>
+        <tr style="background-color: #1e00fe; color: #fff; text-align: left;">
+          <th style="padding: 10px; border: 1px solid #ddd;">Category</th>
+          <th style="padding: 10px; border: 1px solid #ddd;">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;">Title</td>
+          <td style="padding: 10px; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 10px; border: 1px solid #ddd;">Team</td>
+          <td style="padding: 10px; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;">Impact</td>
+          <td style="padding: 10px; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 10px; border: 1px solid #ddd;">Member numbers affected</td>
+          <td style="padding: 10px; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd;">Services / applications affected</td>
+          <td style="padding: 10px; border: 1px solid #ddd;"></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+    <h2 style="color: #000;">Join Us</h2>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+      <tbody>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Zoom Room</strong></td>
+          <td style="padding: 10px; border: 1px solid #ddd;"><a href="${roomUrl}" style="color: #2980B9; text-decoration: none;" target="_blank">${roomUrl}</a></td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Conference ID</strong></td>
+          <td style="padding: 10px; border: 1px solid #ddd;">${conferenceId}</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9;"><strong>Phone Numbers</strong></td>
+          <td style="padding: 10px; border: 1px solid #ddd;">${phoneNumbers}</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+    `;
+
+    const plainDescription = `
+Coordination Call
 
 INCs:
-Title:
-Team:
-Impact:
-Member numbers affected:
-Services / applications affected:
-
+- Title:
+- Team:
+- Impact:
+- Member numbers affected:
+- Services / applications affected:
 
 ---------------------------------------------------------
                        JOIN US:
@@ -51,7 +106,7 @@ Phone Numbers: ${phoneNumbers}
     `;
 
     const startDate = new Date();
-    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Duración de 1 hora
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1-hour duration
 
     const icsContent = `
 BEGIN:VCALENDAR
@@ -63,7 +118,8 @@ DTSTAMP:${formatDate(startDate)}
 DTSTART:${formatDate(startDate)}
 DTEND:${formatDate(endDate)}
 SUMMARY:${subject}
-DESCRIPTION:${description.replace(/\n/g, '\\n')}
+DESCRIPTION:${plainDescription.replace(/\n/g, '\\n')}
+X-ALT-DESC;FMTTYPE=text/html:${htmlDescription.replace(/\n/g, '').replace(/"/g, '\\"')}
 LOCATION:${roomName}
 ATTENDEE;CN="CCOPS";RSVP=TRUE:mailto:CCOPS@mydomain.com
 END:VEVENT

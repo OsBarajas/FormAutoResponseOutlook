@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Defects | Spikes | Stories Generator</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="assests/css/flatpickr.min.css">
+    <script src="assests/js/flatpickr.js"></script>
+    <script src="assests/js/jspdf.umd.min.js"></script>
 
     <style>
         body {
@@ -152,27 +152,27 @@
         </div>
     </div>
 
-<div class="container">
+<form id="storyCreationForm" enctype="multipart/form-data" class="container">
     <h2>Template for Story Creation</h2>
 
     <div class="form-group">
         <label for="incidentNumber">Incident Number:</label>
-        <input type="text" id="incidentNumber" placeholder="Incident Number">
+        <input type="text" id="incidentNumber" name="incidentNumber" placeholder="Incident Number">
     </div>
 
     <div class="form-group">
         <label for="summary">Title (Summary):</label>
-        <input type="text" id="summary" placeholder="Summary">
+        <input type="text" id="summary" name="summary" placeholder="Summary">
     </div>
 
     <div class="form-group">
         <label for="description">Description:</label>
-        <textarea id="description" rows="4" placeholder="Description"></textarea>
+        <textarea id="description" name="description" rows="4" placeholder="Description"></textarea>
     </div>
 
-        <div class="form-group">
+    <div class="form-group">
         <label for="location">ACC Image:</label>
-        <select id="location">
+        <select id="location" name="location">
             <option value="">Choose one option</option>
             <option value="acc">Generic ACC</option>
             <option value="life">Life</option>
@@ -185,67 +185,66 @@
 
     <div class="form-group">
         <label for="impact">Impact:</label>
-        <textarea id="impact" rows="2" placeholder="Impact"></textarea>
-    </div>
-
-        <div class="form-group">
-        <label for="expectedResults">Expected results:</label>
-        <textarea id="expectedResults" rows="2" placeholder="Expected results"></textarea>
+        <textarea id="impact" name="impact" rows="2" placeholder="Impact"></textarea>
     </div>
 
     <div class="form-group">
-        <label for="actualResults">Actual results:</label>
-        <textarea id="actualResults" rows="2" placeholder="Actual results"></textarea>
+        <label for="expectedResults">Expected Results:</label>
+        <textarea id="expectedResults" name="expectedResults" rows="2" placeholder="Expected results"></textarea>
     </div>
 
-        <div class="form-group">
+    <div class="form-group">
+        <label for="actualResults">Actual Results:</label>
+        <textarea id="actualResults" name="actualResults" rows="2" placeholder="Actual results"></textarea>
+    </div>
+
+    <div class="form-group">
         <label for="workaround">Workaround:</label>
-        <textarea id="workaround" rows="2" placeholder="Workaround"></textarea>
+        <textarea id="workaround" name="workaround" rows="2" placeholder="Workaround"></textarea>
     </div>
 
     <div class="form-group members-section">
-        <label>Members affected:</label>
+        <label>Members Affected:</label>
         <ul id="membersList" class="members-list"></ul>
-        <button id="addMemberButton">Add</button>
-        <button id="removeMemberButton">Remove</button>
+        <button type="button" id="addMemberButton">Add</button>
+        <button type="button" id="removeMemberButton">Remove</button>
     </div>
 
     <div class="form-group incidents-section">
-        <label>Incidents associated:</label>
+        <label>Incidents Associated:</label>
         <ul id="incidentsList" class="incidents-list"></ul>
-        <button id="addIncidentButton">Add</button>
-        <button id="removeIncidentButton">Remove</button>
+        <button type="button" id="addIncidentButton">Add</button>
+        <button type="button" id="removeIncidentButton">Remove</button>
     </div>
 
     <div class="form-group">
-        <label for="datetime">Datetime of the issue:</label>
-        <input type="text" id="datetime" placeholder="Select date">
+        <label for="datetime">Datetime of the Issue:</label>
+        <input type="text" id="datetime" name="datetime" placeholder="Select date">
     </div>
 
     <div class="form-group">
         <label for="lob">LOB (Line of Business):</label>
-        <input type="text" id="lob" placeholder="Line of Business">
+        <input type="text" id="lob" name="lob" placeholder="Line of Business">
     </div>
 
     <div class="form-group">
         <label for="channel">Channel:</label>
-        <textarea id="channel" rows="4" placeholder="Channel"></textarea>
+        <textarea id="channel" name="channel" rows="4" placeholder="Channel"></textarea>
     </div>
 
     <div class="form-group">
         <label for="state">State:</label>
-        <input type="text" id="state" placeholder="State">
+        <input type="text" id="state" name="state" placeholder="State">
     </div>
 
     <div class="form-group">
         <label for="observations">Observations / Analysis:</label>
-        <textarea id="observations" rows="2" placeholder="Observations / Analysis"></textarea>
+        <textarea id="observations" name="observations" rows="2" placeholder="Observations / Analysis"></textarea>
     </div>
-
 
     <div class="form-group">
         <label for="priority">Priority:</label>
-        <select id="priority">
+        <select id="priority" name="priority">
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
@@ -255,39 +254,42 @@
 
     <div class="form-group">
         <label for="severity">Severity:</label>
-        <select id="severity">
+        <select id="severity" name="severity">
             <option value="minor">Minor</option>
             <option value="major">Major</option>
             <option value="critical">Critical</option>
         </select>
     </div>
 
-
-
     <div class="steps-section">
-        <label>Steps to reproduce the issue:</label>
+        <label>Steps to Reproduce the Issue:</label>
         <ul id="stepsList" class="steps-list"></ul>
-        <button id="addStepButton">Add</button>
-        <button id="removeStepButton">Remove</button>
+        <button type="button" id="addStepButton">Add</button>
+        <button type="button" id="removeStepButton">Remove</button>
     </div>
 
     <div class="additional-info">
-        <label for="additionalNotes">Logs / evidence: </label>
-        <textarea id="additionalNotes" rows="4" placeholder="Kibana, Glassbox, Datadog, Grafana..."></textarea>
+        <label for="additionalNotes">Logs / Evidence:</label>
+        <textarea id="additionalNotes" name="observations" rows="4" placeholder="Kibana, Glassbox, Datadog, Grafana..."></textarea>
     </div>
 
     <div class="attached-files">
         <label>Attached Files:</label>
-        <input type="file" id="fileInput" multiple class="file-input">
+        <input type="file" id="fileInput" name="files[]" multiple class="file-input">
         <ul id="fileList" class="file-list"></ul>
     </div>
 
+    <div class="recipients">
+        <label for="recipients">Recipient Emails (comma-separated):</label><br>
+        <input required type="text" id="recipients" name="recipients"><br><br>
+    </div>
 
     <div class="button-group">
-        <button id="createButton">Create</button>
-        <button id="cancelButton">Cancel</button>
+        <button type="button" id="createButton">Create</button>
+        <button type="button" id="cancelButton">Cancel</button>
     </div>
-</div>
+</form>
+
 
 <script>
     // Initialize Flatpickr for calendar
@@ -337,7 +339,7 @@
     document.getElementById("addMemberButton").addEventListener("click", function () {
         memberCount++;
         const li = document.createElement("li");
-        li.innerHTML = `<span class="member-label">Member ${memberCount}:</span> <input type="text" placeholder="Member affected ${memberCount}" style="width: 70%;">`;
+        li.innerHTML = `<span class="member-label">Member ${memberCount}:</span> <input name="membersList[${memberCount}]" type="text" placeholder="Member affected ${memberCount}" style="width: 70%;">`;
         document.getElementById("membersList").appendChild(li);
     });
 
@@ -352,7 +354,7 @@
     document.getElementById("addStepButton").addEventListener("click", function () {
         stepCount++;
         const li = document.createElement("li");
-        li.innerHTML = `<span class="step-label">Step ${stepCount}:</span> <input type="text" placeholder="Describe step ${stepCount}" style="width: 70%;">`;
+        li.innerHTML = `<span class="step-label">Step ${stepCount}:</span> <input name="steps[${stepCount}]" type="text" placeholder="Describe step ${stepCount}" style="width: 70%;">`;
         document.getElementById("stepsList").appendChild(li);
     });
 
@@ -370,7 +372,7 @@
     document.getElementById("addIncidentButton").addEventListener("click", function () {
         incidentCount++;
         const li = document.createElement("li");
-        li.innerHTML = `<span class="incident-label">Incident ${incidentCount}:</span> <textarea rows="2" placeholder="Incident associated ${incidentCount}" style="width: 70%;"></textarea>`;
+        li.innerHTML = `<span class="incident-label">Incident ${incidentCount}:</span> <textarea rows="2" name="incidentsList[${incidentCount}]" placeholder="Incident associated ${incidentCount}" style="width: 70%;"></textarea>`;
         document.getElementById("incidentsList").appendChild(li);
     });
 
@@ -408,10 +410,10 @@ document.getElementById("createButton").addEventListener("click", function () {
 
     // Upload images from Location (Seal stamped on top right PDF and Outlook report)
     const imageMap = {
-        acc: "image1.png",
-        life: "image1.png",
-        health: "image1.png",
-        annuity: "image1.png"
+        acc: "life.png",
+        life: "life.png",
+        health: "health.png",
+        annuity: "annuity.png"
     };
 
     const selectedLocationImageUrl = imageMap[location];
@@ -649,72 +651,104 @@ document.getElementById("createButton").addEventListener("click", function () {
     }
 });
 
+
 function createEmail() {
     // Obtener los valores de los campos del formulario
-    const incidentNumber = document.getElementById("incidentNumber").value;
-    const summary = document.getElementById("summary").value;
-    const description = document.getElementById("description").value;
-    const location = document.getElementById("location").value;
-    const impact = document.getElementById("impact").value;
-    const expectedResults = document.getElementById("expectedResults").value;
-    const actualResults = document.getElementById("actualResults").value;
-    const workaround = document.getElementById("workaround").value;
-    const datetime = document.getElementById("datetime").value;
-    const lob = document.getElementById("lob").value;
-    const channel = document.getElementById("channel").value;
-    const state = document.getElementById("state").value;
-    const observations = document.getElementById("observations").value;
-    const priority = document.getElementById("priority").value;
-    const severity = document.getElementById("severity").value;
 
-    // Get members effected
-    const membersList = Array.from(document.querySelectorAll("#membersList li input")).map(input => input.value).filter(Boolean).join(", ") || "None";
 
-    // Get INC associated
-    const incidentsList = Array.from(document.querySelectorAll("#incidentsList li textarea")).map(textarea => textarea.value).filter(Boolean).join("; ") || "None";
+    const form = document.getElementById('storyCreationForm');
+    const formData = new FormData(form);
 
-    // Steps to reproduce
-    const steps = Array.from(document.querySelectorAll("#stepsList li")).map(li => li.querySelector("input").value).filter(Boolean);
 
-    // Files attached
-    const files = Array.from(document.getElementById("fileList").children).map(li => li.textContent).join(", ");
+    // Send AJAX request to PHP server
+    fetch('https://salmandeveloper.net/client-project/formtemplate/send-email.php', {
+        method: 'POST',
 
-    // Email body (text plain) here needs to be in format
-    let emailBody = `Defect Creation / ToDo: \n\n` +
-                    `INCIDENT NUMBER: ${incidentNumber}\n` +
-                    `DATE / ISSUE: ${datetime}\n` +
-                    `PRIORITY: ${priority}\n` +
-                    `LOCATION: ${location}\n` +
-                    `SEVERITY: ${severity}\n` +
-                    `TITLE: ${summary}\n` +
-                    `DESCRIPTION: ${description}\n` +
-                    `IMPACT: ${impact}\n` +
-                    `EXPECTED RESULTS: ${expectedResults}\n` +
-                    `ACTUAL RESULTS: ${actualResults}\n` +
-                    `WORK AROUND: ${workaround}\n` +
-                    `MEMBERS AFFECTED: ${membersList}\n` +
-                    `INCIDENTS ASSOCIATED: ${incidentsList}\n` +
-                    `CHANNEL: ${channel}\n` +
-                    `STATE: ${state}\n` +
-                    `LINE OF BUSINESS (LOB): ${lob}\n` +
-                    `STEPS TO REPRODUCE THE ISSUE: ${steps.join(', ')}\n` +
-                    `LOGS / EVIDENCE: ${observations}\n` +
-                    `FILES ATTACHED: ${files}`;
-
-    // Subject
-    const subject = encodeURIComponent(`Incident Report - ${incidentNumber} - ${summary}`);
-    const body = encodeURIComponent(emailBody);
-
-    // Mailto link
-    const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
-
-    // Popping message for user THIS CAN BE REMOVED AFTER MAIL REFORMAT
-     alert("Please manually attach the PDF to the email in Outlook. To do this:\n1. Go to the 'Insert' tab.\n2. Click on 'Object'.\n3. Select the PDF file and click 'OK'.");
-
-    // Opens new email (Outlook)
-    window.location.href = mailtoLink;
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            alert("Email sent successfully!");
+            console.log(result);
+        } else {
+            alert("Failed to send email. Error: " + result.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while sending the email.");
+    });
+    
 
 }
+
+// function createEmail() {
+//     // Obtener los valores de los campos del formulario
+//     const incidentNumber = document.getElementById("incidentNumber").value;
+//     const summary = document.getElementById("summary").value;
+//     const description = document.getElementById("description").value;
+//     const location = document.getElementById("location").value;
+//     const impact = document.getElementById("impact").value;
+//     const expectedResults = document.getElementById("expectedResults").value;
+//     const actualResults = document.getElementById("actualResults").value;
+//     const workaround = document.getElementById("workaround").value;
+//     const datetime = document.getElementById("datetime").value;
+//     const lob = document.getElementById("lob").value;
+//     const channel = document.getElementById("channel").value;
+//     const state = document.getElementById("state").value;
+//     const observations = document.getElementById("observations").value;
+//     const priority = document.getElementById("priority").value;
+//     const severity = document.getElementById("severity").value;
+
+//     // Get members effected
+//     const membersList = Array.from(document.querySelectorAll("#membersList li input")).map(input => input.value).filter(Boolean).join(", ") || "None";
+
+//     // Get INC associated
+//     const incidentsList = Array.from(document.querySelectorAll("#incidentsList li textarea")).map(textarea => textarea.value).filter(Boolean).join("; ") || "None";
+
+//     // Steps to reproduce
+//     const steps = Array.from(document.querySelectorAll("#stepsList li")).map(li => li.querySelector("input").value).filter(Boolean);
+
+//     // Files attached
+//     const files = Array.from(document.getElementById("fileList").children).map(li => li.textContent).join(", ");
+
+//     // Email body (text plain) here needs to be in format
+//     let emailBody = `Defect Creation / ToDo: \n\n` +
+//                     `INCIDENT NUMBER: ${incidentNumber}\n` +
+//                     `DATE / ISSUE: ${datetime}\n` +
+//                     `PRIORITY: ${priority}\n` +
+//                     `LOCATION: ${location}\n` +
+//                     `SEVERITY: ${severity}\n` +
+//                     `TITLE: ${summary}\n` +
+//                     `DESCRIPTION: ${description}\n` +
+//                     `IMPACT: ${impact}\n` +
+//                     `EXPECTED RESULTS: ${expectedResults}\n` +
+//                     `ACTUAL RESULTS: ${actualResults}\n` +
+//                     `WORK AROUND: ${workaround}\n` +
+//                     `MEMBERS AFFECTED: ${membersList}\n` +
+//                     `INCIDENTS ASSOCIATED: ${incidentsList}\n` +
+//                     `CHANNEL: ${channel}\n` +
+//                     `STATE: ${state}\n` +
+//                     `LINE OF BUSINESS (LOB): ${lob}\n` +
+//                     `STEPS TO REPRODUCE THE ISSUE: ${steps.join(', ')}\n` +
+//                     `LOGS / EVIDENCE: ${observations}\n` +
+//                     `FILES ATTACHED: ${files}`;
+
+//     // Subject
+//     const subject = encodeURIComponent(`Incident Report - ${incidentNumber} - ${summary}`);
+//     const body = encodeURIComponent(emailBody);
+
+//     // Mailto link
+//     const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+
+//     // Popping message for user THIS CAN BE REMOVED AFTER MAIL REFORMAT
+//      alert("Please manually attach the PDF to the email in Outlook. To do this:\n1. Go to the 'Insert' tab.\n2. Click on 'Object'.\n3. Select the PDF file and click 'OK'.");
+
+//     // Opens new email (Outlook)
+//     window.location.href = mailtoLink;
+
+// }
 
 // Link to the event listener for Create button 
 document.getElementById("createButton").addEventListener("click", createEmail);
