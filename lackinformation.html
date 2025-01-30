@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INC with missing information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #1E3A8A;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.5s ease;
+        }
+        .navbar img {
+            height: 50px;
+            transition: opacity 0.5s ease;
+        }
+        .navbar:hover {
+            background-color: rgba(30, 58, 138, 0);
+        }
+        .navbar:hover img {
+            opacity: 1;
+        }
+        .navbar .left-content {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .left-content p {
+            color: white;
+            margin-left: 20px;
+            font-size: 18px;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        .navbar:hover .left-content p {
+            opacity: 0;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-container textarea {
+            height: 150px;
+        }
+        .form-container button {
+            background-color: #1E3A8A;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="left-content">
+            <img src="logo.png" alt="Logo">
+            <p>Lack Information template</p>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form id="lackInformationForm" method="post" action="lackinformation.php" enctype="multipart/form-data">
+            <label for="namerepr"><b>Name of Representative (MSR):</b></label>
+            <p>*** Send this template to any Representative (MSR) or agent from Web Customer Support if submitted an incident with missing information.</p>
+            <input type="text" id="namerepr" name="namerepr" placeholder="Type MSR´s / agent's name here:" required>
+            <br>
+            <br>
+
+            <label for="recipients"><b>Recipient Emails (comma-separated):</b></label>
+             <p>*** You can send it to yourself and then forward the template to the MSR (in case you need to modify it).</p>
+            <input required type="text" id="recipients" name="recipients" placeholder="Type their or your email here:"><br><br>
+
+            <div class="button-group">
+                <button type="submit" id="submitButton">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
