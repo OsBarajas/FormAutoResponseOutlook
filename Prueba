@@ -93,7 +93,7 @@
             </div><br><br>
             <textarea id="guids" placeholder="Enter the GUIDs separated by commas" rows="18" cols="50"></textarea><br><br>
             <div class="button-container">
-                <button onclick="fetchUsaaNumbers()">Convert</button>
+                <button onclick="convertToUsaaNumbers()">Convert</button>
                 <button onclick="clearTextarea('guids')">Clean textbox</button>
             </div><br><br>
             <button onclick="downloadCSV('result_usaa', 'usaa_numbers.csv')">Download CSV</button><br><br>
@@ -108,7 +108,7 @@
             </div><br><br>
             <textarea id="member_numbers" placeholder="Enter the Member Numbers separated by commas" rows="18" cols="50"></textarea><br><br>
             <div class="button-container">
-                <button onclick="fetchGuids()">Convert</button>
+                <button onclick="convertToGuids()">Convert</button>
                 <button onclick="clearTextarea('member_numbers')">Clean textbox</button>
             </div><br><br>
             <button onclick="downloadCSV('result_guid', 'guids.csv')">Download CSV</button><br><br>
@@ -118,7 +118,7 @@
     </div>
 
     <script>
-        function fetchUsaaNumbers() {
+        function convertToUsaaNumbers() {
             var idsInput = document.getElementById('guids').value.split(',');
             var results = [];
             idsInput.forEach(function(guid) {
@@ -127,7 +127,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.usaaNumber) {
-                            results.push(...data.usaaNumber);
+                            results.push(`GUID: ${guid.trim()} -> USAA Number: ${data.usaaNumber}`);
                         }
                         document.getElementById('result_usaa').innerText = results.join('\n');
                     })
@@ -135,7 +135,7 @@
             });
         }
 
-        function fetchGuids() {
+        function convertToGuids() {
             var idsInput = document.getElementById('member_numbers').value.split(',');
             var results = [];
             idsInput.forEach(function(member_number) {
@@ -144,7 +144,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.id) {
-                            results.push(data.id);
+                            results.push(`Member Number: ${member_number.trim()} -> GUID: ${data.id}`);
                         }
                         document.getElementById('result_guid').innerText = results.join('\n');
                     })
@@ -178,4 +178,3 @@
     </script>
 </body>
 </html>
-
