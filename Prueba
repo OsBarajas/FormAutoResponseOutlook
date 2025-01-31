@@ -118,38 +118,38 @@
     </div>
 
     <script>
+        // Mock data for conversions
+        const mockData = {
+            usaaNumbers: {
+                "guid1": ["usaa1", "usaa2"],
+                "guid2": ["usaa3"]
+            },
+            guids: {
+                "member1": "guid1",
+                "member2": "guid2"
+            }
+        };
+
         function convertToUsaaNumbers() {
-            var idsInput = document.getElementById('guids').value.split(',');
-            var results = [];
-            idsInput.forEach(function(guid) {
-                var url = `https://int-api.host.co/enterprise/core-customer/id/v1/party-id/${guid.trim()}`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.usaaNumber) {
-                            results.push(`GUID: ${guid.trim()} -> USAA Number: ${data.usaaNumber}`);
-                        }
-                        document.getElementById('result_usaa').innerText = results.join('\n');
-                    })
-                    .catch(error => console.error('Error:', error));
+            const guids = document.getElementById('guids').value.split(',');
+            let results = [];
+            guids.forEach(guid => {
+                if (mockData.usaaNumbers[guid.trim()]) {
+                    results = results.concat(mockData.usaaNumbers[guid.trim()]);
+                }
             });
+            document.getElementById('result_usaa').innerText = results.join('\n');
         }
 
         function convertToGuids() {
-            var idsInput = document.getElementById('member_numbers').value.split(',');
-            var results = [];
-            idsInput.forEach(function(member_number) {
-                var url = `https://int-api.host.co/enterprise/core-customer/id/v1/guid/${member_number.trim()}-USAA`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.id) {
-                            results.push(`Member Number: ${member_number.trim()} -> GUID: ${data.id}`);
-                        }
-                        document.getElementById('result_guid').innerText = results.join('\n');
-                    })
-                    .catch(error => console.error('Error:', error));
+            const memberNumbers = document.getElementById('member_numbers').value.split(',');
+            let results = [];
+            memberNumbers.forEach(member => {
+                if (mockData.guids[member.trim()]) {
+                    results.push(mockData.guids[member.trim()]);
+                }
             });
+            document.getElementById('result_guid').innerText = results.join('\n');
         }
 
         function uploadCSV(inputId, textareaId) {
