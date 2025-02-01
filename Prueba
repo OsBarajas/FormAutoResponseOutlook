@@ -178,3 +178,148 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+Para montar un servidor de correo en tu red privada interna en un servidor corporativo, puedes instalar y configurar un servidor SMTP interno. Aquí te dejo una guía paso a paso para configurar un servidor SMTP en Red Hat 7 utilizando Postfix, que es una opción robusta y ampliamente utilizada.
+
+1. Instalar Postfix
+Actualiza tu sistema:
+
+sh
+sudo yum update -y
+Instala Postfix:
+
+sh
+sudo yum install postfix -y
+2. Configurar Postfix
+Editar el archivo de configuración principal de Postfix:
+
+sh
+sudo nano /etc/postfix/main.cf
+Realiza las siguientes modificaciones en main.cf:
+
+Configura el nombre del servidor:
+
+sh
+myhostname = nombre_del_servidor.tu_dominio.com
+Configura el dominio:
+
+sh
+mydomain = tu_dominio.com
+myorigin = $mydomain
+Define las redes confiables (tu red interna):
+
+sh
+mynetworks = 127.0.0.0/8, [::1]/128, tu_red_interna/24
+Guardar y cerrar el archivo de configuración (Ctrl+O para guardar, Ctrl+X para salir).
+
+3. Iniciar y habilitar Postfix
+Inicia el servicio de Postfix:
+
+sh
+sudo systemctl start postfix
+Habilita Postfix para que se inicie al arrancar el sistema:
+
+sh
+sudo systemctl enable postfix
+4. Configurar firewalld para permitir el tráfico SMTP
+Permitir el tráfico SMTP:
+
+sh
+sudo firewall-cmd --permanent --add-service=smtp
+sudo firewall-cmd --reload
+5. Verificar que Postfix esté funcionando
+Envía un correo de prueba:
+
+sh
+echo "Correo de prueba" | mail -s "Asunto de prueba" tu_correo@ejemplo.com
+Si el correo de prueba se envía correctamente y llega a tu bandeja de entrada, tu servidor Postfix está configurado correctamente y listo para ser usado con tu script PHP.
+
+6. Ajustar el script PHP para usar Postfix
+Tu script PHP utiliza la función mail() que por defecto utiliza sendmail en sistemas Linux. Asegúrate de que el archivo sendmail_path en tu archivo de configuración de PHP (php.ini) esté correctamente apuntando a sendmail.
+
+Edita el archivo php.ini:
+
+sh
+sudo nano /etc/php.ini
+Busca la línea sendmail_path y asegúrate de que esté configurada así:
+
+sh
+sendmail_path = /usr/sbin/sendmail -t -i
+Guarda los cambios y reinicia el servidor web:
+
+sh
+sudo systemctl restart httpd
+Con estos pasos, tu servidor Red Hat 7 debería estar listo para enviar correos utilizando Postfix. El script PHP que proporcionaste debería funcionar correctamente y enviar correos utilizando la plantilla configurada.
+
+Si tienes más preguntas o necesitas ayuda adicional, ¡házmelo saber! Estoy aquí para ayudarte.
+
+Como se cual es mi red interna
+Para determinar cuál es tu red interna, hay varios pasos y herramientas que puedes utilizar. Aquí tienes un método básico para identificar tu red interna en un servidor Red Hat 7:
+
+1. Verifica la Configuración de tu Interfaz de Red
+Abre una terminal en tu servidor Red Hat 7.
+
+Usa el comando ip addr para listar todas las interfaces de red y sus configuraciones:
+
+sh
+ip addr
+Busca la interfaz activa (generalmente eth0, ens33, enp0s3, etc.) y toma nota de la dirección IP asignada. La salida se verá algo así:
+
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:7d:52:9f brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.100/24 brd 192.168.1.255 scope global dynamic ens33
+       valid_lft 86386sec preferred_lft 86386sec
+    inet6 fe80::20c:29ff:fe7d:529f/64 scope link
+       valid_lft forever preferred_lft forever
+2. Identifica tu Rango de Red
+Basado en la dirección IP y la máscara de red (subnet mask), puedes identificar tu red interna. En el ejemplo anterior, la dirección IP es 192.168.1.100 y la máscara de red es /24.
+
+Esto significa que tu rango de red es 192.168.1.0/24.
+
+Otra forma de verificar la configuración de red es utilizando el comando ifconfig:
+
+sh
+ifconfig
+La salida será similar a la de ip addr y te proporcionará la información de la dirección IP y la máscara de red.
+
+3. Verifica la Puerta de Enlace (Gateway)
+Para ver la configuración de la puerta de enlace y asegurarte de que estás en la red correcta, puedes usar el comando route o ip route:
+
+sh
+route -n
+o
+
+sh
+ip route
+Esto te mostrará la ruta predeterminada y la dirección de la puerta de enlace. La salida será algo así:
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.1.1     0.0.0.0         UG    100    0        0 ens33
+192.168.1.0     0.0.0.0         255.255.255.0   U     100    0        0 ens33
+La puerta de enlace (Gateway) aquí es 192.168.1.1, lo que confirma que estás en la red 192.168.1.0/24.
+
+Configura tu Red Interna en Postfix
+Abre el archivo de configuración de Postfix:
+
+sh
+sudo nano /etc/postfix/main.cf
+Configura mynetworks con tu rango de red:
+
+sh
+mynetworks = 127.0.0.0/8, [::1]/128, 192.168.1.0/24
+Guarda y cierra el archivo (Ctrl+O para guardar, Ctrl+X para salir).
+
+Reinicia Postfix:
+
+sh
+sudo systemctl restart postfix
+Conclusión
+Estos pasos deberían ayudarte a identificar tu red interna y configurar Postfix para que funcione correctamente en tu servidor Red Hat 7. Si tienes más preguntas o necesitas más detalles, ¡háznmelo saber! Estoy aquí para ayudarte.2
