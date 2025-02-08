@@ -1,6 +1,6 @@
 function createMeetingRequest(room) {
     const zoomLink = `${zoomBaseUrl}${room}`;
-    const subject = "Coordination Call";
+    const subject = `${subject} - ${description} in ${room}`;
     const description = `INC:\nTitle:\nTeam:\nImpact:\nMember numbers affected:\nServices / applications affected:\n\nZoom Room: ${zoomLink}\n\nConference ID: [ID]\nPhone Numbers: [Numbers]`;
 
     // Crear un archivo .ics para una reunión en formato iCalendar
